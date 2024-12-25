@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自闭症预测系统</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin: 10px 0 5px;
+            color: #555;
+        }
+        input[type="number"],
+        select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .result h2 {
+            margin: 0;
+            color: #333;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>自闭症预测系统</h1>
+        <form method="post">
+            <label for="age">年龄（单位：月）:</label>
+            <input type="number" id="age" name="age" min="0" required>
+
+            <label for="jaundice">出生时是否有黄疸:</label>
+            <select id="jaundice" name="jaundice" required>
+                <option value="是">是</option>
+                <option value="否">否</option>
+            </select>
+
+            <label for="gender">性别:</label>
+            <select id="gender" name="gender" required>
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+
+            <label for="ethnicity">种族:</label>
+            <select id="ethnicity" name="ethnicity" required>
+                <option value="White European">White European</option>
+                <option value="Latino">Latino</option>
+                <option value="Native Indian">Native Indian</option>
+                <option value="Others">Others</option>
+                <option value="Pacifica">Pacifica</option>
+                <option value="asian">asian</option>
+                <option value="black">black</option>
+                <option value="middle eastern">middle eastern</option>
+                <option value="mixed">mixed</option>
+                <option value="south asian">south asian</option>
+            </select>
+
+            <label for="family_autism">家庭成员是否有自闭症:</label>
+            <select id="family_autism" name="family_autism" required>
+                <option value="是">是</option>
+                <option value="否">否</option>
+            </select>
+
+            <button type="submit">预测</button>
+        </form>
+
+        {% if logmodel_pred %}
+            <div class="result">
+                <h2>逻辑回归模型预测结果: {{ logmodel_pred }} (准确率: {{ logmodel_accuracy }})</h2>
+            </div>
+        {% endif %}
+        {% if rfc_pred %}
+            <div class="result">
+                <h2>随机森林模型预测结果: {{ rfc_pred }} (准确率: {{ rfc_accuracy }})</h2>
+            </div>
+        {% endif %}
+        {% if knn_pred %}
+            <div class="result">
+                <h2>K近邻模型预测结果: {{ knn_pred }} (准确率: {{ knn_accuracy }})</h2>
+            </div>
+        {% endif %}
+        {% if svm_pred %}
+            <div class="result">
+                <h2>支持向量机模型预测结果: {{ svm_pred }} (准确率: {{ svm_accuracy }})</h2>
+            </div>
+        {% endif %}
+        {% if dtc_pred %}
+            <div class="result">
+                <h2>决策树模型预测结果: {{ dtc_pred }} (准确率: {{ dtc_accuracy }})</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
